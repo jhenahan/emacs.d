@@ -64,7 +64,7 @@
    #+END_SRC
 
 * Dependency Management with =req-package=
-  =[[https://github.com/edvorg/req-package][req-package]]= is a wrapper on top of =[[https://github.com/jwiegley/use-package][use-package]]=, a package dependency
+  [[https://github.com/edvorg/req-package][req-package]] is a wrapper on top of [[https://github.com/jwiegley/use-package][use-package]], a package dependency
   management tool. The documentation for =use-package= is immensely helpful for
   figuring out how to describe package dependencies and settings. =req-package=
   adds the =:require= keyword which allows us to define dependencies between
@@ -114,7 +114,7 @@
    #+END_SRC
 
 *** =evil-leader=
-    =<leader>= is a really useful shorthand in Vim, and =[[https://github.com/cofi/evil-leader][evil-leader]]= brings the
+    =<leader>= is a really useful shorthand in Vim, and [[https://github.com/cofi/evil-leader][evil-leader]] brings the
     same facility to Evil. For really common commands, leader bindings can save
     those precious keystrokes.
 
@@ -134,7 +134,7 @@
     One of the little Vim conveniences not found in vanilla Evil is incrementing
     and decrementing numbers with =C-a= and =C-x=, respectively, likely because
     these are already important bindings in Emacs. However, by limiting the
-    effect to normal mode, we can use =[[https://github.com/cofi/evil-numbers][evil-numbers]]= to bring this functionality
+    effect to normal mode, we can use [[https://github.com/cofi/evil-numbers][evil-numbers]] to bring this functionality
     back without stomping all over existing bindings.
 
     #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
@@ -149,7 +149,7 @@
 
 *** =evil-surround=
     Working with delimiter pairs is common enough that Tim Pope wrote a plugin
-    to ease working with them in Vim, called =[[https://github.com/tpope/vim-surround][vim-surround]]=. =[[https://github.com/timcharper/evil-surround][evil-surround]]=
+    to ease working with them in Vim, called [[https://github.com/tpope/vim-surround][vim-surround]]. [[https://github.com/timcharper/evil-surround][evil-surround]]
     emulates this functionality in =evil=. It's quite extensible, but the
     defaults seem to cover all my needs. Check out the README for some examples.
 
@@ -160,7 +160,7 @@
     #+END_SRC
 
 *** =undo-tree=
-    Standard Emacs undo is kind of confusing. =[[http://www.dr-qubit.org/emacs.php#undo-tree][undo-tree]]= replaces this with a
+    Standard Emacs undo is kind of confusing. [[http://www.dr-qubit.org/emacs.php#undo-tree][undo-tree]] replaces this with a
     simpler tree structure. It also allows us to visualize the tree directly.
 
     #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
@@ -201,7 +201,7 @@
 
 ** =popwin=
    The one annoying thing about =helm= is that the window it opens to show
-   results is kinda huge. I use =[[https://github.com/m2ym/popwin-el][popwin]]= to limit the height of most of the
+   results is kinda huge. I use [[https://github.com/m2ym/popwin-el][popwin]] to limit the height of most of the
    Helm buffers.
    
    #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
@@ -234,10 +234,10 @@
 
 ** Theme
    I like to use a dark theme in the evening and light theme at night, and I
-   the colors of =[[https://github.com/kuanyui/moe-theme.el][moe-theme]]=. It's bright and has good default faced for most
+   the colors of [[https://github.com/kuanyui/moe-theme.el][moe-theme]]. It's bright and has good default faced for most
    modes. It also has dark and light versions, which is convenient. It has a
    built-in mechanism to change the theme by the time of day as determined by
-   longitude and latitude, but I found it a bit buggy. I use =[[https://github.com/hadronzoo/theme-changer][theme-changer]]=,
+   longitude and latitude, but I found it a bit buggy. I use [[https://github.com/hadronzoo/theme-changer][theme-changer]],
    which seems to behave better and I can be pointlessly precise in specifying
    my coordinates.
 
@@ -255,7 +255,7 @@
 
 ** Modeline
    Powerline is very popular in Vim (and with Evil users), but I much prefer
-   =[[https://github.com/Bruce-Connor/smart-mode-line][smart-mode-line]]=. It's compatible with just about anything you can imagine,
+   [[https://github.com/Bruce-Connor/smart-mode-line][smart-mode-line]]. It's compatible with just about anything you can imagine,
    and it's easy to set up.
 
    
@@ -268,7 +268,7 @@
     #+END_SRC
 
 *** =nyan-mode=
-    =[[https://github.com/TeMPOraL/nyan-mode][nyan-mode]]= is a goofy way to display one's location in a file.
+    [[https://github.com/TeMPOraL/nyan-mode][nyan-mode]] is a goofy way to display one's location in a file.
 
     #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
       (req-package nyan-mode
@@ -306,7 +306,7 @@
                   (menu-bar-mode -1))   
    #+END_SRC
 
-   I also use =[[http://www.emacswiki.org/emacs/DiminishedModes][diminish]]= to clean up the modeline.
+   I also use [[http://www.emacswiki.org/emacs/DiminishedModes][diminish]] to clean up the modeline.
 
    #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
      (req-package diminish
@@ -366,9 +366,9 @@
                    :init (setq linum-relative-current-symbol ""))
     #+END_SRC
 ** Delimiters
-   I like my delimiters matched and visually distinct. I used =[[https://bitbucket.org/kovisoft/paredit][paredit]]= for a
-   long time, but I'm currently experimenting with =[[https://github.com/Fuco1/smartparens][smartparens]]=. As for the
-   visual element, I quite like =[[https://github.com/jlr/rainbow-delimiters][rainbow-delimiters]]=.
+   I like my delimiters matched and visually distinct. I used [[https://bitbucket.org/kovisoft/paredit][paredit]] for a
+   long time, but I'm currently experimenting with [[https://github.com/Fuco1/smartparens][smartparens]]. As for the
+   visual element, I quite like [[https://github.com/jlr/rainbow-delimiters][rainbow-delimiters]].
 
    #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
      (req-package smartparens-config
