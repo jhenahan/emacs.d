@@ -68,11 +68,7 @@
   management tool. The documentation for =use-package= is immensely helpful for
   figuring out how to describe package dependencies and settings. =req-package=
   adds the =:require= keyword which allows us to define dependencies between
-  related packages. =unbind-key= takes a key sequence and a keymap and removes
-  that binding. Invoking =describe-personal-keybindings= prints a summary of
-  your keybindings through =bind-key= and any overrides or conflicts. This
-  is really the killer convenience of using =bind-key=.
-
+  related packages. 
 ** Initialize =req-package=
    With the preceding process complete, we just need to add the following line
    to our init file to begin using =req-package=:
@@ -82,10 +78,16 @@
    #+END_SRC
 
 * Keybindings with =bind-key=
-  There are a number of ways to bind keys in Emacs, but I find =bind-key=,
-  bundled with =use-package=, easier to work with and, more importantly, easier
-  to read. =bind-key= takes a key sequence, a command, and an optional keymap.
-  =bind-key*= overrides any minor mode which sets the keybinding.
+  There are a number of ways to bind keys in Emacs, but I find
+  =bind-key=, bundled with =use-package=, easier to work with and,
+  more importantly, easier to read. =bind-key= takes a key sequence, a
+  command, and an optional keymap.  =bind-key*= overrides any minor
+  mode which sets the keybinding. =unbind-key= takes a key sequence
+  and a keymap and removes that binding. Invoking
+  =describe-personal-keybindings= prints a summary of your keybindings
+  through =bind-key= and any overrides or conflicts. This is really
+  the killer convenience of using =bind-key=.
+
 
 * Evil
   I was a diehard Vim user for a long time, and I still prefer the Vim way of
