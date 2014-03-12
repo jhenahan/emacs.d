@@ -503,12 +503,24 @@
                     (setq auto-save-file-name-transforms
                           `((".*" ,temporary-file-directory t)))))
    #+END_SRC
+
 ** Questions
    Keep it short.
 
    #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
      (defalias 'yes-or-no-p 'y-or-n-p)
    #+END_SRC
+
+** Customizations
+   [[http://www.emacswiki.org/emacs/cus-edit%2B.el][cus-edit+]] is a really handy way to keep your customizations up to
+   date, especially if you set your =custom-file=.
+
+   #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
+     (req-package cus-edit+
+                  :ensure cus-edit+
+                  :init (customize-toggle-outside-change-updates))
+   #+END_SRC
+
 * Fulfill Requirements
   At long last we need only call the following function to send =req-package= on
   its merry way.
