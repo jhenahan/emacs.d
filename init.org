@@ -239,25 +239,21 @@
   configuration that goes here.
 
 ** Theme
-   I like to use a dark theme in the evening and light theme at night, and I
-   the colors of [[https://github.com/kuanyui/moe-theme.el][moe-theme]]. It's bright and has good default faced for most
-   modes. It also has dark and light versions, which is convenient. It has a
-   built-in mechanism to change the theme by the time of day as determined by
-   longitude and latitude, but I found it a bit buggy. I use [[https://github.com/hadronzoo/theme-changer][theme-changer]],
-   which seems to behave better and I can be pointlessly precise in specifying
-   my coordinates.
+   I've switched entirely to dark themes to make working with
+   Structured Haskell Mode easier, and I like the colors of
+   [[https://github.com/kuanyui/moe-theme.el][moe-theme]]. It's bright and has good default faces for most
+   modes. It also has dark and light versions, which is convenient.
+   
+   I also advise =load-theme= to fully unload the previous theme
+   before loading a new one.
 
    #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
-     (req-package theme-changer
-                  :ensure (moe-theme theme-changer)
-                  :commands change-theme
-                  :init
-                  (progn
-                    (setq calendar-location-name "Burlington, VT")
-                    (setq calendar-latitude [44 28 north])
-                    (setq calendar-longitude [73 13 west])
-                    (change-theme 'moe-light 'moe-dark)))
-      #+END_SRC
+     (defadvice load-theme 
+       (before theme-dont-propagate activate)
+       (mapc #'disable-theme custom-enabled-themes))
+     
+     (load-theme 'moe-dark t)
+   #+END_SRC
 
 ** Modeline
    Powerline is very popular in Vim (and with Evil users), but I much prefer
