@@ -75,6 +75,8 @@
 
    #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
      (require 'req-package)
+     (setq custom-file "~/.emacs.d/custom.el")
+     (load custom-file)
    #+END_SRC
 
 * Keybindings with =bind-key=
