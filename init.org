@@ -415,6 +415,16 @@
                     (add-hook 'ruby-mode-hook 'color-identifiers-mode)))
    #+END_SRC
  
+** Completion
+   #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
+     (req-package auto-complete-config
+       :ensure auto-complete
+       :init
+       (progn
+         (ac-config-default)
+         (setq ac-auto-start 3)))
+   #+END_SRC
+
 * Languages
 ** Haskell
    #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
