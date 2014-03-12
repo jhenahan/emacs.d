@@ -459,6 +459,13 @@
                                    'structured-haskell-mode))
     #+END_SRC
 
+*** ghc-mod
+    #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
+      (req-package ghc
+        :ensure ghc
+        :init (add-hook 'haskell-mode-hook (lambda () (ghc-init))))
+    #+END_SRC
+
 ** Emacs Lisp
    #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
      (req-package lisp-mode
