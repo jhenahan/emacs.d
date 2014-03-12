@@ -90,7 +90,6 @@
   through =bind-key= and any overrides or conflicts. This is really
   the killer convenience of using =bind-key=.
 
-
 * Evil
   I was a diehard Vim user for a long time, and I still prefer the Vim way of
   interacting with text. [[https://gitorious.org/evil/pages/Home][Evil]] is a (mostly feature-complete) Vim emulation mode
@@ -355,6 +354,7 @@
      (req-package magit
                   :ensure magit)
    #+END_SRC
+
 ** Line Numbers
    #+BEGIN_SRC emacs-lisp :tangle ~/.emacs.d/init.el
      (req-package linum
@@ -372,6 +372,7 @@
                    :ensure linum-relative
                    :init (setq linum-relative-current-symbol ""))
     #+END_SRC
+
 ** Delimiters
    I like my delimiters matched and visually distinct. I used [[https://bitbucket.org/kovisoft/paredit][paredit]] for a
    long time, but I'm currently experimenting with [[https://github.com/Fuco1/smartparens][smartparens]]. As for the
@@ -482,7 +483,7 @@
                     (setq TeX-PDF-mode t)
                     (setq LaTeX-command "latex -shell-escape")))
    #+END_SRC
-
+ 
 * Annoyances
   Fixing a couple of gripes I have with Emacs.
 
