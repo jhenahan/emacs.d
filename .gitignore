@@ -1,3 +1,7 @@
 .cask/
 init.el
 auto-save-list/
+
+*.~undo-tree~
+
+/ac-comphist.dat
