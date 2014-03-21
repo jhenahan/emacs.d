@@ -106,14 +106,17 @@
 
    #+BEGIN_SRC emacs-lisp
      (req-package evil
-                  :ensure evil
-                  :requires (evil-leader helm-config evil-numbers undo-tree surround)
-                  :init
-                  (progn
-                    (setq evil-default-cursor t)
-                    (evil-mode 1)
-                    (evil-ex-define-cmd "e[dit]" 'helm-find-files)
-                    (evil-ex-define-cmd "b[uffer]" 'helm-buffers-list)))
+       :ensure evil
+       :requires (evil-leader helm-config evil-numbers undo-tree surround)
+       :init
+       (progn
+         (setq evil-default-cursor t)
+         (evil-mode 1)
+         (evil-ex-define-cmd "e[dit]" 'helm-find-files)
+         (evil-ex-define-cmd "b[uffer]" 'helm-buffers-list)
+         (setq evil-motion-state-modes
+               (append evil-emacs-state-modes evil-motion-state-modes))
+         (setq evil-emacs-state-modes '(magit-mode))))
    #+END_SRC
 
 *** =evil-leader=
@@ -481,10 +484,14 @@
    #+BEGIN_SRC emacs-lisp
      (req-package tex-site
                   :ensure auctex
+                  :requires auto-complete-auctex
                   :init
                   (progn
                     (setq TeX-PDF-mode t)
                     (setq LaTeX-command "latex -shell-escape")))
+
+     (req-package auto-complete-auctex
+       :requires auto-complete-config)
    #+END_SRC
  
 * Annoyances
