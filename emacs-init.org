@@ -422,7 +422,9 @@
        :init
        (progn
          (ac-config-default)
-         (setq ac-auto-start 3)))
+         (setq ac-auto-start 3)
+         (require 'ac-math)
+         (require 'auto-complete-auctex)))
    #+END_SRC
 
 * Languages
@@ -484,13 +486,14 @@
    #+BEGIN_SRC emacs-lisp
      (req-package tex-site
                   :ensure auctex
-                  :requires auto-complete-auctex
-                  :init
-                  (progn
-                    (setq TeX-PDF-mode t)
-                    (setq LaTeX-command "latex -shell-escape")))
+                  :requires auto-complete-config)
+
+     (req-package ac-math
+       :ensure ac-math
+       :requires auto-complete-config)
 
      (req-package auto-complete-auctex
+       :ensure auto-complete-auctex
        :requires auto-complete-config)
    #+END_SRC
  
