@@ -127,15 +127,19 @@
     those precious keystrokes.
 
     #+BEGIN_SRC emacs-lisp
-            (req-package evil-leader
-                         :ensure evil-leader
-                         :requires evil
-                         :init
-                         (progn
-                           (evil-leader/set-leader "\\")
-                           (global-evil-leader-mode 1)
-                           (evil-leader/set-key
-                             "l" 'org-insert-link)))
+      (req-package evil-leader
+                   :ensure evil-leader
+                   :requires evil
+                   :init
+                   (progn
+                     (evil-leader/set-leader "\\")
+                     (global-evil-leader-mode 1)
+                     (evil-leader/set-key
+                       "l" 'org-insert-link
+                       "d" 'delete-window
+                       "D" 'delete-other-windows
+                       "h" 'split-window-below
+                       "v" 'split-window-right)))
     #+END_SRC
 
 *** =evil-numbers=
