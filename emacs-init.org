@@ -143,7 +143,11 @@
                        "d" 'delete-window
                        "D" 'delete-other-windows
                        "h" 'split-window-below
-                       "v" 'split-window-right)))
+                       "v" 'split-window-right
+                       "k" 'kill-buffer
+                       "K" 'kill-buffer-and-window
+                       "f" 'dired
+                       "gs" 'magit-status)))
     #+END_SRC
 
 *** =evil-numbers=
@@ -383,7 +387,8 @@
 
    #+BEGIN_SRC emacs-lisp
      (req-package magit
-                  :ensure magit)
+       :ensure magit
+       :diminish magit-auto-revert-mode)
    #+END_SRC
 
 ** Line Numbers
