@@ -537,6 +537,13 @@
 * Annoyances
   Fixing a couple of gripes I have with Emacs.
 
+** Exec path
+   #+BEGIN_SRC emacs-lisp
+     (req-package exec-path-from-shell
+       :init
+       (when (memq window-system '(mac ns))
+         (exec-path-from-shell-initialize)))
+   #+END_SRC
 ** Backups and Autosave Files
    These things end up everywhere, so let's stick them all in a temporary
    directory.
