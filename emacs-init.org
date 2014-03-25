@@ -107,7 +107,8 @@
    #+BEGIN_SRC emacs-lisp
      (req-package evil
        :ensure evil
-       :requires (evil-leader helm-config evil-numbers undo-tree surround)
+       :requires (evil-leader helm-config evil-numbers
+                              undo-tree surround ace-jump-mode)
        :init
        (progn
          (setq evil-default-cursor t)
@@ -116,7 +117,8 @@
          (evil-ex-define-cmd "b[uffer]" 'helm-buffers-list)
          (setq evil-motion-state-modes
                (append evil-emacs-state-modes evil-motion-state-modes))
-         (setq evil-emacs-state-modes '(magit-mode))))
+         (setq evil-emacs-state-modes '(magit-mode))
+         (bind-key "SPC" 'ace-jump-mode evil-normal-state-map)))
    #+END_SRC
 
 *** =evil-leader=
@@ -125,15 +127,15 @@
     those precious keystrokes.
 
     #+BEGIN_SRC emacs-lisp
-      (req-package evil-leader
-                   :ensure evil-leader
-                   :requires evil
-                   :init
-                   (progn
-                     (evil-leader/set-leader ",")
-                     (global-evil-leader-mode 1)
-                     (evil-leader/set-key
-                       "l" 'org-insert-link)))
+            (req-package evil-leader
+                         :ensure evil-leader
+                         :requires evil
+                         :init
+                         (progn
+                           (evil-leader/set-leader "\\")
+                           (global-evil-leader-mode 1)
+                           (evil-leader/set-key
+                             "l" 'org-insert-link)))
     #+END_SRC
 
 *** =evil-numbers=
@@ -179,6 +181,10 @@
                      (global-undo-tree-mode)))    
     #+END_SRC
     
+*** =ace-jump-mode=
+    #+BEGIN_SRC emacs-lisp
+      (req-package ace-jump-mode)
+    #+END_SRC
 * Helm 
   Coming from Vim, I was very used to the fuzzy matching of CtrlP. [[http://www.emacswiki.org/emacs/InteractivelyDoThings][Ido]] is a
   popular choice when one wishes to add this functionality to Emacs since it is
@@ -538,3 +544,4 @@
   #+BEGIN_SRC emacs-lisp
     (req-package-finish)
   #+END_SRC
+
