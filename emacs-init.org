@@ -115,10 +115,13 @@
          (evil-mode 1)
          (evil-ex-define-cmd "e[dit]" 'helm-find-files)
          (evil-ex-define-cmd "b[uffer]" 'helm-buffers-list)
+         (bind-key "[escape]" 'keyboard-escape-quit evil-normal-state-map)
+         (bind-key "[escape]" 'keyboard-escape-quit evil-visual-state-map)
+         (bind-key "<escape>" 'keyboard-escape-quit)
          (setq evil-motion-state-modes
                (append evil-emacs-state-modes evil-motion-state-modes))
          (setq evil-emacs-state-modes '(magit-mode))
-         (bind-key "SPC" 'ace-jump-mode evil-normal-state-map)))
+         (bind-key "\"" 'ace-jump-mode evil-normal-state-map)))
    #+END_SRC
 
 *** =evil-leader=
@@ -132,10 +135,11 @@
                    :requires evil
                    :init
                    (progn
-                     (evil-leader/set-leader "\\")
+                     (evil-leader/set-leader "<SPC>")
                      (global-evil-leader-mode 1)
                      (evil-leader/set-key
                        "l" 'org-insert-link
+                       "o" 'other-window
                        "d" 'delete-window
                        "D" 'delete-other-windows
                        "h" 'split-window-below
@@ -189,6 +193,7 @@
     #+BEGIN_SRC emacs-lisp
       (req-package ace-jump-mode)
     #+END_SRC
+
 * Helm 
   Coming from Vim, I was very used to the fuzzy matching of CtrlP. [[http://www.emacswiki.org/emacs/InteractivelyDoThings][Ido]] is a
   popular choice when one wishes to add this functionality to Emacs since it is
@@ -264,8 +269,20 @@
      (defadvice load-theme 
        (before theme-dont-propagate activate)
        (mapc #'disable-theme custom-enabled-themes))
-     
-     (load-theme 'moe-dark t)
+
+     ; (load-theme 'moe-dark t)
+
+     (req-package moe-theme
+       :requires powerline
+       :init
+       (progn
+         (defun moe-stuff (&rest frame)
+           (powerline-moe-theme)
+           (moe-theme-random-color))
+     ;    (add-hook 'before-make-frame-hook 'moe-stuff)
+         (add-hook 'after-make-frame-functions 'moe-stuff t)
+     ;    (add-hook 'server-switch-hook 'moe-stuff)
+         (moe-dark)))
    #+END_SRC
 
 ** Modeline
@@ -275,7 +292,7 @@
 
    
 *** =smart-mode-line=
-    #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp :tangle no
       (req-package smart-mode-line
                    :requires nyan-mode
                    :ensure smart-mode-line
@@ -285,7 +302,7 @@
 *** =nyan-mode=
     [[https://github.com/TeMPOraL/nyan-mode][nyan-mode]] is a goofy way to display one's location in a file.
 
-    #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp :tangle no
       (req-package nyan-mode
                :ensure nyan-mode
                :init
@@ -295,6 +312,11 @@
                :config (nyan-start-animation))    
     #+END_SRC
 
+*** =powerline=
+    #+BEGIN_SRC emacs-lisp
+      (req-package powerline)
+    #+END_SRC
+    
 ** Faces
    #+BEGIN_SRC emacs-lisp
      (req-package faces
