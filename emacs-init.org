@@ -120,7 +120,7 @@
          (bind-key "<escape>" 'keyboard-escape-quit)
          (setq evil-motion-state-modes
                (append evil-emacs-state-modes evil-motion-state-modes))
-         (setq evil-emacs-state-modes '(magit-mode))
+         (setq evil-emacs-state-modes '(magit-mode dired-mode))
          (bind-key "\"" 'ace-jump-mode evil-normal-state-map)))
    #+END_SRC
 
