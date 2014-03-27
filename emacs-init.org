@@ -161,7 +161,7 @@
       (req-package evil-numbers
                    :ensure evil-numbers
                    :requires evil
-                   :init
+                   :config
                    (progn
                      (bind-key "C-a" 'evil-numbers/inc-at-pt evil-normal-state-map)
                      (bind-key "C-x" 'evil-numbers/dec-at-pt evil-normal-state-map)))
@@ -213,18 +213,19 @@
 
    #+BEGIN_SRC emacs-lisp
      (req-package helm-config
-                  :ensure helm
-                  :requires popwin
-                  :diminish (helm-mode . "")
-                  :init
-                  (progn
-                    (setq helm-ff-auto-update-initial-value)
-                    (setq popwin:special-display-config
-                          (append helm-popwin
-                                  popwin:special-display-config))
-                    (bind-key* "M-x" 'helm-M-x)
-                    (bind-key* "C-x C-f" 'helm-find-files)
-                    (helm-mode 1)))
+       :ensure helm
+       :requires popwin
+       :diminish (helm-mode . "")
+       :init
+       (progn
+         (setq helm-ff-auto-update-initial-value)
+         (setq popwin:special-display-config
+               (append helm-popwin
+                       popwin:special-display-config))
+         (bind-key* "M-x" 'helm-M-x)
+         (bind-key* "C-x C-f" 'helm-find-files))
+       :config
+       (helm-mode 1))
    #+END_SRC
 
 ** =popwin=
@@ -234,28 +235,28 @@
    
    #+BEGIN_SRC emacs-lisp
      (req-package popwin
-                  :ensure popwin
-                  :init
-                  (progn
-                    (popwin-mode 1)
-                    (setq helm-popwin
-                          '(("*Helm Find Files*" :height 10)
-                            ("^\*helm.+\*$" :regexp t :height 10)))))
+       :init
+       (progn
+         (popwin-mode 1)
+         (setq helm-popwin
+               '(("*Helm Find Files*" :height 10)
+                 ("^\*helm.+\*$" :regexp t :height 10)))))
    #+END_SRC
+
 * Org
   #+BEGIN_SRC emacs-lisp
     (req-package org
-                 :ensure org
-                 :init
-                 (progn
-                   (add-hook 'org-mode-hook
-                             '(lambda ()
-                                (setq mode-name " ꙮ ")))
-                   (bind-key* "C-c c" 'org-capture)
-                   (bind-key* "C-c l" 'org-store-link)
-                   (bind-key* "C-c a" 'org-agenda)
-                   (bind-key* "C-c b" 'org-iswitch)))
+      :config
+      (progn
+        (add-hook 'org-mode-hook
+                  '(lambda ()
+                     (setq mode-name " ꙮ ")))
+        (bind-key* "C-c c" 'org-capture)
+        (bind-key* "C-c l" 'org-store-link)
+        (bind-key* "C-c a" 'org-agenda)
+        (bind-key* "C-c b" 'org-iswitch)))
   #+END_SRC
+
 * UI
   I'm pretty picky about how I want my editor to look, so there's a fair bit of
   configuration that goes here.
@@ -274,19 +275,16 @@
        (before theme-dont-propagate activate)
        (mapc #'disable-theme custom-enabled-themes))
 
-     ; (load-theme 'moe-dark t)
-
      (req-package moe-theme
        :requires powerline
        :init
+       (moe-dark)
+       :config
        (progn
          (defun moe-stuff (&rest frame)
            (powerline-moe-theme)
            (moe-theme-random-color))
-     ;    (add-hook 'before-make-frame-hook 'moe-stuff)
-         (add-hook 'after-make-frame-functions 'moe-stuff t)
-     ;    (add-hook 'server-switch-hook 'moe-stuff)
-         (moe-dark)))
+         (add-hook 'after-make-frame-functions 'moe-stuff t)))
    #+END_SRC
 
 ** Modeline
@@ -366,20 +364,18 @@
    
    #+BEGIN_SRC emacs-lisp
      (req-package flycheck
-                  :ensure flycheck
-                  :diminish (global-flycheck-mode . " ✓ ")
-                  :init
-                  (progn
-                    (add-hook 'after-init-hook 'global-flycheck-mode)))
-     
+       :ensure flycheck
+       :diminish (global-flycheck-mode . " ✓ ")
+       :config
+       (add-hook 'after-init-hook 'global-flycheck-mode))
+
      (req-package helm-flycheck
-                  :ensure helm-flycheck
-                  :commands helm-flycheck
-                  :requires flycheck
-                  :config
-                  (bind-key "C-c ! h"
-                            'helm-flycheck
-                            flycheck-mode-map))
+       :commands helm-flycheck
+       :requires flycheck
+       :config
+       (bind-key "C-c ! h"
+                 'helm-flycheck
+                 flycheck-mode-map))
    #+END_SRC
 
 ** Magit
@@ -387,16 +383,15 @@
 
    #+BEGIN_SRC emacs-lisp
      (req-package magit
-       :ensure magit
        :diminish magit-auto-revert-mode)
    #+END_SRC
 
 ** Line Numbers
    #+BEGIN_SRC emacs-lisp
      (req-package linum
-                  :init
-                  (add-hook 'prog-mode-hook
-                            '(lambda () (linum-mode 1))))   
+       :config
+       (add-hook 'prog-mode-hook
+                 '(lambda () (linum-mode 1))))   
    #+END_SRC
 
 *** Relative Line Numbers
@@ -405,8 +400,7 @@
 
     #+BEGIN_SRC emacs-lisp
       (req-package linum-relative
-                   :ensure linum-relative
-                   :init (setq linum-relative-current-symbol ""))
+        :init (setq linum-relative-current-symbol ""))
     #+END_SRC
 
 ** Delimiters
@@ -416,14 +410,13 @@
 
    #+BEGIN_SRC emacs-lisp
      (req-package smartparens-config
-                  :ensure smartparens
-                  :diminish (smartparens-mode . "()")
-                  :init (smartparens-global-mode t))
-     
+       :ensure smartparens
+       :diminish (smartparens-mode . "()")
+       :init (smartparens-global-mode t))
+
      (req-package rainbow-delimiters
-                  :ensure rainbow-delimiters
-                  :init
-                  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+       :config
+       (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
    #+END_SRC
 
 ** Colors
@@ -432,9 +425,8 @@
 
    #+BEGIN_SRC emacs-lisp
      (req-package rainbow-mode
-                  :ensure rainbow-mode
-                  :diminish (rainbow-mode . "")
-                  :init (add-hook 'prog-mode-hook 'rainbow-mode))
+       :diminish (rainbow-mode . "")
+       :config (add-hook 'prog-mode-hook 'rainbow-mode))
    #+END_SRC
    
    There's also an interesting mode for uniquely coloring identifiers in code
@@ -443,13 +435,13 @@
 
    #+BEGIN_SRC emacs-lisp
      (req-package color-identifiers-mode
-                  :ensure color-identifiers-mode
-                  :diminish (color-identifiers-mode . "")
-                  :init
-                  (progn
-                    (setq color-identifiers:num-colors 50)
-                    (add-hook 'emacs-lisp-mode-hook 'color-identifiers-mode)
-                    (add-hook 'ruby-mode-hook 'color-identifiers-mode)))
+       :diminish (color-identifiers-mode . "")
+       :init
+       (setq color-identifiers:num-colors 50)
+       :config
+       (progn
+         (add-hook 'emacs-lisp-mode-hook 'color-identifiers-mode)
+         (add-hook 'ruby-mode-hook 'color-identifiers-mode)))
    #+END_SRC
  
 ** Completion
@@ -459,7 +451,9 @@
        :init
        (progn
          (ac-config-default)
-         (setq ac-auto-start 3)
+         (setq ac-auto-start 3))
+       :config
+       (progn
          (require 'ac-math)
          (require 'auto-complete-auctex)))
    #+END_SRC
@@ -468,29 +462,28 @@
 ** Haskell
    #+BEGIN_SRC emacs-lisp
      (req-package haskell-mode
-                  :ensure haskell-mode
-                  :commands haskell-mode
-                  :init
-                    (add-to-list 'auto-mode-alist '("\\.l?hs$" . haskell-mode))
-                  :config
-                  (progn
-                    (req-package inf-haskell)
-                    (req-package hs-lint)
-                    (defun my-haskell-hook ()
-                      (setq mode-name " λ ")
-                      (turn-on-haskell-doc)
-                      (diminish 'haskell-doc-mode "")
-                      (capitalized-words-mode)
-                      (diminish 'capitalized-words-mode "")
-                      (turn-on-eldoc-mode)
-                      (diminish 'eldoc-mode "")
-                      (turn-on-haskell-decl-scan)
-                      (setq evil-auto-indent nil))
-                    (setq haskell-font-lock-symbols 'unicode)
-                    (setq haskell-literate-default 'tex)
-                    (setq haskell-stylish-on-save t)
-                    (setq haskell-tags-on-save t)
-                    (add-hook 'haskell-mode-hook 'my-haskell-hook)))
+       :commands haskell-mode
+       :init
+       (add-to-list 'auto-mode-alist '("\\.l?hs$" . haskell-mode))
+       :config
+       (progn
+         (req-package inf-haskell)
+         (req-package hs-lint)
+         (defun my-haskell-hook ()
+           (setq mode-name " λ ")
+           (turn-on-haskell-doc)
+           (diminish 'haskell-doc-mode "")
+           (capitalized-words-mode)
+           (diminish 'capitalized-words-mode "")
+           (turn-on-eldoc-mode)
+           (diminish 'eldoc-mode "")
+           (turn-on-haskell-decl-scan)
+           (setq evil-auto-indent nil))
+         (setq haskell-font-lock-symbols 'unicode)
+         (setq haskell-literate-default 'tex)
+         (setq haskell-stylish-on-save t)
+         (setq haskell-tags-on-save t)
+         (add-hook 'haskell-mode-hook 'my-haskell-hook)))
    #+END_SRC
 *** Structured Haskell Mode
     #+BEGIN_SRC emacs-lisp
@@ -511,10 +504,10 @@
 ** Emacs Lisp
    #+BEGIN_SRC emacs-lisp
      (req-package lisp-mode
-                  :init
-                  (add-hook 'emacs-lisp-mode-hook
-                            (lambda ()
-                              (setq mode-name " ξ ")))) 
+       :init
+       (add-hook 'emacs-lisp-mode-hook
+                 (lambda ()
+                   (setq mode-name " ξ ")))) 
    #+END_SRC
 
 ** LaTeX
@@ -522,15 +515,13 @@
 
    #+BEGIN_SRC emacs-lisp
      (req-package tex-site
-                  :ensure auctex
-                  :requires auto-complete-config)
+       :ensure auctex
+       :requires auto-complete-config)
 
      (req-package ac-math
-       :ensure ac-math
        :requires auto-complete-config)
 
      (req-package auto-complete-auctex
-       :ensure auto-complete-auctex
        :requires auto-complete-config)
    #+END_SRC
  
@@ -544,18 +535,19 @@
        (when (memq window-system '(mac ns))
          (exec-path-from-shell-initialize)))
    #+END_SRC
+
 ** Backups and Autosave Files
    These things end up everywhere, so let's stick them all in a temporary
    directory.
 
    #+BEGIN_SRC emacs-lisp
      (req-package files
-                  :init
-                  (progn
-                    (setq backup-directory-alist
-                          `((".*" . ,temporary-file-directory)))
-                    (setq auto-save-file-name-transforms
-                          `((".*" ,temporary-file-directory t)))))
+       :init
+       (progn
+         (setq backup-directory-alist
+               `((".*" . ,temporary-file-directory)))
+         (setq auto-save-file-name-transforms
+               `((".*" ,temporary-file-directory t)))))
    #+END_SRC
 
 ** Questions
@@ -571,8 +563,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (req-package cus-edit+
-                  :ensure cus-edit+
-                  :init (customize-toggle-outside-change-updates))
+       :init (customize-toggle-outside-change-updates))
    #+END_SRC
 
 * Fulfill Requirements
