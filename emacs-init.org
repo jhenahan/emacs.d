@@ -525,6 +525,12 @@
        :requires auto-complete-config)
    #+END_SRC
  
+** R
+   #+BEGIN_SRC emacs-lisp
+     (req-package ess-site
+       :ensure ess)
+   #+END_SRC
+
 * Annoyances
   Fixing a couple of gripes I have with Emacs.
 
