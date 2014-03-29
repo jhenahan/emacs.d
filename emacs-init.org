@@ -484,6 +484,9 @@
          (setq haskell-stylish-on-save t)
          (setq haskell-tags-on-save t)
          (add-hook 'haskell-mode-hook 'my-haskell-hook)))
+
+     (req-package flycheck-haskell
+       :config (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
    #+END_SRC
 *** Structured Haskell Mode
     #+BEGIN_SRC emacs-lisp
