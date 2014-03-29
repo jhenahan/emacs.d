@@ -463,12 +463,21 @@
    #+BEGIN_SRC emacs-lisp
      (req-package haskell-mode
        :commands haskell-mode
+       :requires (flycheck flycheck-haskell)
        :init
        (add-to-list 'auto-mode-alist '("\\.l?hs$" . haskell-mode))
        :config
        (progn
          (req-package inf-haskell)
          (req-package hs-lint)
+         (bind-key "C-x C-d" nil haskell-mode-map)
+         (bind-key "C-c C-z" 'haskell-interactive-switch haskell-mode-map)
+         (bind-key "C-c C-l" 'haskell-process-load-file haskell-mode-map)
+         (bind-key "C-c C-b" 'haskell-interactive-switch haskell-mode-map)
+         (bind-key "C-c C-t" 'haskell-process-do-type haskell-mode-map)
+         (bind-key "C-c C-i" 'haskell-process-do-info haskell-mode-map)
+         (bind-key "C-c M-." nil haskell-mode-map)
+         (bind-key "C-c C-d" nil haskell-mode-map)
          (defun my-haskell-hook ()
            (setq mode-name " λ ")
            (turn-on-haskell-doc)
