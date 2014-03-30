@@ -543,6 +543,11 @@
        :ensure ess)
    #+END_SRC
 
+** Idris
+   #+BEGIN_SRC emacs-lisp
+     (req-package idris-mode)
+   #+END_SRC
+   
 * Annoyances
   Fixing a couple of gripes I have with Emacs.
 
