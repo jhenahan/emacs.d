@@ -560,6 +560,21 @@
      (req-package idris-mode)
    #+END_SRC
    
+** PHP/Drupal
+   [[https://github.com/arnested/drupal-mode][drupal-mode]] has [[https://github.com/ejmr/php-mode][php-mode]] as a dependency, so we could conceivably
+   get away with just including the former here, but just in case we
+   want a bit more control or we decide that =drupal-mode= isn't worth
+   it, we'll make separate =req-package= blocks.
+   #+BEGIN_SRC emacs-lisp
+     (req-package php-mode
+       :init (setq php-template-compatibility nil))
+
+     (req-package web-mode)
+
+     (req-package drupal-mode
+       :requires (php-mode ggtags))
+   #+END_SRC
+
 * Annoyances
   Fixing a couple of gripes I have with Emacs.
 
