@@ -458,6 +458,18 @@
          (require 'auto-complete-auctex)))
    #+END_SRC
 
+** Tags
+   #+BEGIN_SRC emacs-lisp
+     (req-package ggtags)
+   #+END_SRC
+
+** Grepping
+   Except really I'm =ag=ging.
+   #+BEGIN_SRC emacs-lisp
+     (req-package helm-ag
+       :requires evil-leader)
+   #+END_SRC
+
 * Languages
 ** Haskell
    #+BEGIN_SRC emacs-lisp
