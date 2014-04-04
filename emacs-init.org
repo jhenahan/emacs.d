@@ -108,20 +108,25 @@
      (req-package evil
        :ensure evil
        :requires (evil-leader helm-config evil-numbers
-                              undo-tree surround ace-jump-mode)
+                              undo-tree surround
+                              ace-jump-mode)
        :init
        (progn
          (setq evil-default-cursor t)
          (evil-mode 1)
+         (setq evil-motion-state-modes
+               (append evil-emacs-state-modes evil-motion-state-modes))
+         (setq evil-emacs-state-modes '(magit-mode dired-mode)))
+       :config
+       (progn
          (evil-ex-define-cmd "e[dit]" 'helm-find-files)
          (evil-ex-define-cmd "b[uffer]" 'helm-buffers-list)
          (bind-key "[escape]" 'keyboard-escape-quit evil-normal-state-map)
          (bind-key "[escape]" 'keyboard-escape-quit evil-visual-state-map)
          (bind-key "<escape>" 'keyboard-escape-quit)
-         (setq evil-motion-state-modes
-               (append evil-emacs-state-modes evil-motion-state-modes))
-         (setq evil-emacs-state-modes '(magit-mode dired-mode))
-         (bind-key "\"" 'ace-jump-mode evil-normal-state-map)))
+         (bind-key "\"" 'ace-jump-mode evil-normal-state-map)
+         (evil-define-key 'normal
+                          tern-mode-keymap "gd" 'tern-find-definition)))
    #+END_SRC
 
 *** =evil-leader=
@@ -573,6 +578,22 @@
 
      (req-package drupal-mode
        :requires (php-mode ggtags))
+   #+END_SRC
+
+** Javascript
+   #+BEGIN_SRC emacs-lisp
+     (req-package tern
+       :requires tern-auto-complete
+       :init
+       (progn
+         (add-hook 'js-mode-hook
+                   (lambda ()
+                     (tern-mode t))))
+       :config
+       (progn
+         (tern-ac-setup)))
+
+     (req-package tern-auto-complete)
    #+END_SRC
 
 * Annoyances
