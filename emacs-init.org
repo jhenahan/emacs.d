@@ -106,10 +106,8 @@
 
    #+BEGIN_SRC emacs-lisp
      (req-package evil
+       :require (helm-config undo-tree surround ace-jump-mode)
        :ensure evil
-       :requires (evil-leader helm-config evil-numbers
-                              undo-tree surround
-                              ace-jump-mode)
        :init
        (progn
          (setq evil-default-cursor t)
@@ -136,8 +134,8 @@
 
     #+BEGIN_SRC emacs-lisp
       (req-package evil-leader
+                   :require evil
                    :ensure evil-leader
-                   :requires evil
                    :init
                    (progn
                      (evil-leader/set-leader "<SPC>")
@@ -164,8 +162,7 @@
 
     #+BEGIN_SRC emacs-lisp
       (req-package evil-numbers
-                   :ensure evil-numbers
-                   :requires evil
+                   :require evil
                    :config
                    (progn
                      (bind-key "C-a" 'evil-numbers/inc-at-pt evil-normal-state-map)
@@ -180,7 +177,6 @@
 
     #+BEGIN_SRC emacs-lisp
       (req-package surround
-                   :ensure surround
                    :init (global-surround-mode 1))
     #+END_SRC
 
@@ -190,7 +186,6 @@
 
     #+BEGIN_SRC emacs-lisp
       (req-package undo-tree
-                   :ensure undo-tree
                    :diminish ""
                    :init
                    (progn
@@ -218,8 +213,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (req-package helm-config
-       :ensure helm
-       :requires popwin
+       :require popwin
        :diminish (helm-mode . "")
        :init
        (progn
@@ -281,7 +275,7 @@
        (mapc #'disable-theme custom-enabled-themes))
 
      (req-package moe-theme
-       :requires powerline
+       :require powerline
        :init
        (moe-dark)
        :config
@@ -301,8 +295,7 @@
 *** =smart-mode-line=
     #+BEGIN_SRC emacs-lisp :tangle no
       (req-package smart-mode-line
-                   :requires nyan-mode
-                   :ensure smart-mode-line
+                   :require nyan-mode
                    :init (sml/setup))    
     #+END_SRC
 
@@ -311,7 +304,6 @@
 
     #+BEGIN_SRC emacs-lisp :tangle no
       (req-package nyan-mode
-               :ensure nyan-mode
                :init
                (progn
                  (nyan-mode)
@@ -353,8 +345,7 @@
    I also use [[http://www.emacswiki.org/emacs/DiminishedModes][diminish]] to clean up the modeline.
 
    #+BEGIN_SRC emacs-lisp
-     (req-package diminish
-                  :ensure diminish)
+     (req-package diminish)
      
      (req-package server
                   :diminish (server-buffer-clients . ""))
@@ -369,14 +360,13 @@
    
    #+BEGIN_SRC emacs-lisp
      (req-package flycheck
-       :ensure flycheck
        :diminish (global-flycheck-mode . " ✓ ")
        :config
        (add-hook 'after-init-hook 'global-flycheck-mode))
 
      (req-package helm-flycheck
+       :require flycheck
        :commands helm-flycheck
-       :requires flycheck
        :config
        (bind-key "C-c ! h"
                  'helm-flycheck
@@ -472,15 +462,15 @@
    Except really I'm =ag=ging.
    #+BEGIN_SRC emacs-lisp
      (req-package helm-ag
-       :requires evil-leader)
+       :require evil-leader)
    #+END_SRC
 
 * Languages
 ** Haskell
    #+BEGIN_SRC emacs-lisp
      (req-package haskell-mode
+       :require (flycheck flycheck-haskell)
        :commands haskell-mode
-       :requires (flycheck flycheck-haskell)
        :init
        (add-to-list 'auto-mode-alist '("\\.l?hs$" . haskell-mode))
        :config
@@ -517,7 +507,7 @@
 *** Structured Haskell Mode
     #+BEGIN_SRC emacs-lisp
       (req-package shm
-                   :requires haskell-mode
+                   :require haskell-mode
                    :commands structured-haskell-mode
                    :init (add-hook 'haskell-mode-hook
                                    'structured-haskell-mode))
@@ -526,7 +516,6 @@
 *** ghc-mod
     #+BEGIN_SRC emacs-lisp
       (req-package ghc
-        :ensure ghc
         :init (add-hook 'haskell-mode-hook (lambda () (ghc-init))))
     #+END_SRC
 
@@ -544,14 +533,14 @@
 
    #+BEGIN_SRC emacs-lisp
      (req-package tex-site
-       :ensure auctex
-       :requires auto-complete-config)
+       :require auto-complete-config
+       :ensure auctex)
 
      (req-package ac-math
-       :requires auto-complete-config)
+       :require auto-complete-config)
 
      (req-package auto-complete-auctex
-       :requires auto-complete-config)
+       :require auto-complete-config)
    #+END_SRC
  
 ** R
@@ -577,13 +566,13 @@
      (req-package web-mode)
 
      (req-package drupal-mode
-       :requires (php-mode ggtags))
+       :require (php-mode ggtags))
    #+END_SRC
 
 ** Javascript
    #+BEGIN_SRC emacs-lisp
      (req-package tern
-       :requires tern-auto-complete
+       :require tern-auto-complete
        :init
        (progn
          (add-hook 'js-mode-hook
