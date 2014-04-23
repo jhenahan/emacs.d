@@ -14,6 +14,3 @@
 (org-babel-load-file
  (expand-file-name "emacs-init.org"
                    user-emacs-directory))
-
-(require 'framepop "~/.emacs.d/vendor/framepop.el")
-(framepop-enable)
