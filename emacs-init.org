@@ -189,6 +189,8 @@
                    :diminish ""
                    :init
                    (progn
+                     (setq undo-tree-history-directory-alist
+                           (quote (("." . "~/.emacs.d/undofiles"))))
                      (setq undo-tree-auto-save-history t)
                      (global-undo-tree-mode)))    
     #+END_SRC
