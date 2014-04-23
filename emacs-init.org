@@ -412,7 +412,7 @@
    so that they are easy to scan for. It's still a bit iffy, but it's fun to
    try.
 
-   #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp :tangle no
      (req-package color-identifiers-mode
        :diminish (color-identifiers-mode . "")
        :init
