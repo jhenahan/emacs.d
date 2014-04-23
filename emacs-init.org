@@ -113,8 +113,7 @@
          (setq evil-default-cursor t)
          (evil-mode 1)
          (setq evil-motion-state-modes
-               (append evil-emacs-state-modes evil-motion-state-modes))
-         (setq evil-emacs-state-modes '(magit-mode dired-mode)))
+               (append '(package-menu-mode) evil-motion-state-modes)))
        :config
        (progn
          (evil-ex-define-cmd "e[dit]" 'helm-find-files)
@@ -314,28 +313,17 @@
     
 ** Faces
    #+BEGIN_SRC emacs-lisp
-     (req-package faces
-                  :config
-                  (progn
-                    (set-face-attribute 'default nil :family "DejaVu Sans Mono")
-                    (set-face-attribute 'default nil :height 120)))   
+     (set-face-attribute 'default nil :family "DejaVu Sans Mono")
+     (set-face-attribute 'default nil :height 120)
    #+END_SRC
 
 ** Cleanup
    Who wants all that toolbars and scrollbars noise?
    
    #+BEGIN_SRC emacs-lisp
-     (req-package scroll-bar
-                  :config
-                  (scroll-bar-mode -1))
-     
-     (req-package tool-bar
-                  :config
-                  (tool-bar-mode -1))
-     
-     (req-package menu-bar
-                  :config
-                  (menu-bar-mode -1))   
+     (scroll-bar-mode -1)
+     (tool-bar-mode -1)
+     (menu-bar-mode -1)
    #+END_SRC
 
    I also use [[http://www.emacswiki.org/emacs/DiminishedModes][diminish]] to clean up the modeline.
@@ -597,13 +585,10 @@
    directory.
 
    #+BEGIN_SRC emacs-lisp
-     (req-package files
-       :init
-       (progn
-         (setq backup-directory-alist
-               `((".*" . ,temporary-file-directory)))
-         (setq auto-save-file-name-transforms
-               `((".*" ,temporary-file-directory t)))))
+     (setq backup-directory-alist
+           `((".*" . ,temporary-file-directory)))
+     (setq auto-save-file-name-transforms
+           `((".*" ,temporary-file-directory t)))
    #+END_SRC
 
 ** Questions
