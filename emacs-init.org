@@ -382,6 +382,13 @@
         :init (setq linum-relative-current-symbol ""))
     #+END_SRC
 
+** Damnable Tabs!
+   Tabs are gross, and you shouldn't use them unless your language dictates it.
+
+   #+BEGIN_SRC emacs-lisp
+     (setq-default indent-tabs-mode nil) 
+   #+END_SRC
+
 ** Delimiters
    I like my delimiters matched and visually distinct. I used [[https://bitbucket.org/kovisoft/paredit][paredit]] for a
    long time, but I'm currently experimenting with [[https://github.com/Fuco1/smartparens][smartparens]]. As for the
