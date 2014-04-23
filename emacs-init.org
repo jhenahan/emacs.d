@@ -274,16 +274,10 @@
        (before theme-dont-propagate activate)
        (mapc #'disable-theme custom-enabled-themes))
 
-     (req-package moe-theme
-       :require powerline
-       :init
-       (moe-dark)
-       :config
-       (progn
-         (defun moe-stuff (&rest frame)
-           (powerline-moe-theme)
-           (moe-theme-random-color))
-         (add-hook 'after-make-frame-functions 'moe-stuff t)))
+     (req-package moe-theme)
+
+     (req-package moe-theme-switcher
+       :require moe-theme)
    #+END_SRC
 
 ** Modeline
@@ -293,7 +287,7 @@
 
    
 *** =smart-mode-line=
-    #+BEGIN_SRC emacs-lisp :tangle no
+    #+BEGIN_SRC emacs-lisp
       (req-package smart-mode-line
                    :require nyan-mode
                    :init (sml/setup))    
@@ -302,7 +296,7 @@
 *** =nyan-mode=
     [[https://github.com/TeMPOraL/nyan-mode][nyan-mode]] is a goofy way to display one's location in a file.
 
-    #+BEGIN_SRC emacs-lisp :tangle no
+    #+BEGIN_SRC emacs-lisp
       (req-package nyan-mode
                :init
                (progn
@@ -312,7 +306,7 @@
     #+END_SRC
 
 *** =powerline=
-    #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp :tangle no
       (req-package powerline)
     #+END_SRC
     
