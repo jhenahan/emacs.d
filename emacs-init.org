@@ -614,6 +614,11 @@
        :init (customize-toggle-outside-change-updates))
    #+END_SRC
 
+** Disabled Functions
+   #+BEGIN_SRC emacs-lisp
+     (put 'dired-find-alternate-file 'disabled nil)
+   #+END_SRC
+
 * Fulfill Requirements
   At long last we need only call the following function to send =req-package= on
   its merry way.
