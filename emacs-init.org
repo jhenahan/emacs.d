@@ -44,8 +44,6 @@
      
      (depends-on "pallet")
      (depends-on "req-package")
-     (depends-on "moe-theme")
-     (depends-on "evil")
    #+END_SRC
 
    Then run the following command in your =.emacs.d= directory to set up Pallet:
@@ -106,8 +104,6 @@
 
    #+BEGIN_SRC emacs-lisp
      (req-package evil
-       :require (helm-config undo-tree surround ace-jump-mode)
-       :ensure evil
        :init
        (progn
          (setq evil-default-cursor t)
@@ -121,10 +117,18 @@
          (bind-key "[escape]" 'keyboard-escape-quit evil-normal-state-map)
          (bind-key "[escape]" 'keyboard-escape-quit evil-visual-state-map)
          (bind-key "<escape>" 'keyboard-escape-quit)
-         (bind-key "\"" 'ace-jump-mode evil-normal-state-map)
-         (evil-define-key 'normal
-                          tern-mode-keymap "gd" 'tern-find-definition)))
+         (bind-key "\"" 'ace-jump-mode evil-normal-state-map)))
    #+END_SRC
+
+*** =evil-god-state=
+    #+BEGIN_SRC emacs-lisp
+      (req-package evil-god-state
+        :require (evil god-mode)
+        :init
+        (evil-define-key 'normal global-map "\\" 'evil-execute-in-god-state))
+
+      (req-package god-mode)
+    #+END_SRC
 
 *** =evil-leader=
     =<leader>= is a really useful shorthand in Vim, and [[https://github.com/cofi/evil-leader][evil-leader]] brings the
@@ -134,7 +138,6 @@
     #+BEGIN_SRC emacs-lisp
       (req-package evil-leader
                    :require evil
-                   :ensure evil-leader
                    :init
                    (progn
                      (evil-leader/set-leader "<SPC>")
@@ -175,8 +178,9 @@
     defaults seem to cover all my needs. Check out the README for some examples.
 
     #+BEGIN_SRC emacs-lisp
-      (req-package surround
-                   :init (global-surround-mode 1))
+      (req-package evil-surround
+                   :require evil
+                   :init (global-evil-surround-mode 1))
     #+END_SRC
 
 *** =undo-tree=
@@ -266,19 +270,10 @@
    Structured Haskell Mode easier, and I like the colors of
    [[https://github.com/kuanyui/moe-theme.el][moe-theme]]. It's bright and has good default faces for most
    modes. It also has dark and light versions, which is convenient.
-   
-   I also advise =load-theme= to fully unload the previous theme
-   before loading a new one.
 
    #+BEGIN_SRC emacs-lisp
-     (defadvice load-theme 
-       (before theme-dont-propagate activate)
-       (mapc #'disable-theme custom-enabled-themes))
-
-     (req-package moe-theme)
-
-     (req-package moe-theme-switcher
-       :require moe-theme)
+     (req-package moe-theme
+       :init (moe-dark))
    #+END_SRC
 
 ** Modeline
@@ -289,9 +284,13 @@
    
 *** =smart-mode-line=
     #+BEGIN_SRC emacs-lisp
-      (req-package smart-mode-line
-                   :require nyan-mode
-                   :init (sml/setup))    
+         (req-package smart-mode-line
+           :require (nyan-mode moe-theme)
+           :init (setq sml/theme 'dark)
+           :config (sml/setup))
+         (add-to-list 'after-make-frame-functions
+             (lambda (&rest frame)
+               (sml/apply-theme 'dark))) 
     #+END_SRC
 
 *** =nyan-mode=
@@ -304,11 +303,6 @@
                  (nyan-mode)
                  (setq nyan-wavy-trail t))
                :config (nyan-start-animation))    
-    #+END_SRC
-
-*** =powerline=
-    #+BEGIN_SRC emacs-lisp :tangle no
-      (req-package powerline)
     #+END_SRC
     
 ** Faces
@@ -324,13 +318,13 @@
      (scroll-bar-mode -1)
      (tool-bar-mode -1)
      (menu-bar-mode -1)
+     (when (memq window-system '(mac ns))
+       (menu-bar-mode 1))
    #+END_SRC
 
    I also use [[http://www.emacswiki.org/emacs/DiminishedModes][diminish]] to clean up the modeline.
 
    #+BEGIN_SRC emacs-lisp
-     (req-package diminish)
-     
      (req-package server
                   :diminish (server-buffer-clients . ""))
    #+END_SRC
@@ -437,16 +431,7 @@
        :init
        (progn
          (ac-config-default)
-         (setq ac-auto-start 3))
-       :config
-       (progn
-         (require 'ac-math)
-         (require 'auto-complete-auctex)))
-   #+END_SRC
-
-** Tags
-   #+BEGIN_SRC emacs-lisp
-     (req-package ggtags)
+         (setq ac-auto-start 3)))
    #+END_SRC
 
 ** Grepping
@@ -525,57 +510,18 @@
    #+BEGIN_SRC emacs-lisp
      (req-package tex-site
        :require auto-complete-config
-       :ensure auctex)
-
-     (req-package ac-math
-       :require auto-complete-config)
-
-     (req-package auto-complete-auctex
-       :require auto-complete-config)
+       :ensure auctex
+       :init
+       (progn
+        (req-package ac-math)
+        (req-package auto-complete-auctex)))
    #+END_SRC
  
-** R
-   #+BEGIN_SRC emacs-lisp
-     (req-package ess-site
-       :ensure ess)
-   #+END_SRC
-
 ** Idris
    #+BEGIN_SRC emacs-lisp
      (req-package idris-mode)
    #+END_SRC
    
-** PHP/Drupal
-   [[https://github.com/arnested/drupal-mode][drupal-mode]] has [[https://github.com/ejmr/php-mode][php-mode]] as a dependency, so we could conceivably
-   get away with just including the former here, but just in case we
-   want a bit more control or we decide that =drupal-mode= isn't worth
-   it, we'll make separate =req-package= blocks.
-   #+BEGIN_SRC emacs-lisp
-     (req-package php-mode
-       :init (setq php-template-compatibility nil))
-
-     (req-package web-mode)
-
-     (req-package drupal-mode
-       :require (php-mode ggtags))
-   #+END_SRC
-
-** Javascript
-   #+BEGIN_SRC emacs-lisp
-     (req-package tern
-       :require tern-auto-complete
-       :init
-       (progn
-         (add-hook 'js-mode-hook
-                   (lambda ()
-                     (tern-mode t))))
-       :config
-       (progn
-         (tern-ac-setup)))
-
-     (req-package tern-auto-complete)
-   #+END_SRC
-
 * Annoyances
   Fixing a couple of gripes I have with Emacs.
 
